@@ -79,16 +79,15 @@ wm.Weltmeister = ig.Class.extend({
 		
 		this.mode = this.MODE.DEFAULT;
 		
-		
 		this.tilesetSelectDialog = new wm.SelectFileDropdown( '#layerTileset', wm.config.api.browse, 'images' );
 		this.entities = new wm.EditEntities( $('#layerEntities') );
 		
 		$('#layers').sortable({
 			update: this.reorderLayers.bind(this)
 		});
+
 		$('#layers').disableSelection();
-		this.resetModified();
-		
+		this.resetModified();		
 		
 		// Events/Input
 		if( wm.config.touchScroll ) {
@@ -96,13 +95,14 @@ wm.Weltmeister = ig.Class.extend({
 			ig.system.canvas.addEventListener('mousewheel', this.touchScroll.bind(this), false );
 
 			// Unset MWHEEL_* binds
-			delete wm.config.binds['MWHEEL_UP'];
-			delete wm.config.binds['MWHEEL_DOWN'];
+			delete wm.config.binds.MWHEEL_UP;
+			delete wm.config.binds.MWHEEL_DOWN;
 		}
 
 		for( var key in wm.config.binds ) {
 			ig.input.bind( ig.KEY[key], wm.config.binds[key] );
 		}
+
 		ig.input.keydownCallback = this.keydown.bind(this);
 		ig.input.keyupCallback = this.keyup.bind(this);
 		ig.input.mousemoveCallback = this.mousemove.bind(this);
@@ -127,14 +127,13 @@ wm.Weltmeister = ig.Class.extend({
 			$('input:focus').blur();
 		});
 		
-		
 		this.undo = new wm.Undo( wm.config.undoLevels );
 		
 		
 		if( wm.config.loadLastLevel ) {
 			var path = $.cookie('wmLastLevel');
 			if( path ) {
-				this.load( null, path )
+				this.load( null, path );
 			}
 		}
 		
@@ -151,9 +150,7 @@ wm.Weltmeister = ig.Class.extend({
 			var index = parseInt(key);
 			var name = $('#layers div.layer:nth-child('+index+') span.name').text();
 			
-			var layer = name == 'entities'
-				? this.entities
-				: this.getLayerWithName(name);
+			var layer = name == 'entities' ? this.entities : this.getLayerWithName(name);
 				
 			if( layer ) {
 				if( event.shiftKey ) {
@@ -164,7 +161,6 @@ wm.Weltmeister = ig.Class.extend({
 			}
 		}
 	},
-	
 	
 	showLoadDialog: function() {
 		if( this.modified ) {
@@ -204,7 +200,7 @@ wm.Weltmeister = ig.Class.extend({
 	
 	
 	confirmClose: function( event ) {
-		var rv = undefined;
+		var rv;
 		if( this.modified && wm.config.askBeforeClose ) {
 			rv = 'There are some unsaved changes. Leave anyway?';
 		}
@@ -319,7 +315,6 @@ wm.Weltmeister = ig.Class.extend({
 		});
 	},
 	
-	
 	loadResponse: function( data ) {
 		$.cookie( 'wmLastLevel', this.filePath );
 		
@@ -335,13 +330,13 @@ wm.Weltmeister = ig.Class.extend({
 		this.screen = {x: 0, y: 0};
 		this.entities.clear();
 		
-		for( var i=0; i < data.entities.length; i++ ) {
+		for( var i = 0; i < data.entities.length; i++ ) {
 			var ent = data.entities[i];
 			this.entities.spawnEntity( ent.type, ent.x, ent.y, ent.settings );
 		}
 		
-		for( var i=0; i < data.layer.length; i++ ) {
-			var ld = data.layer[i];
+		for( var j = 0; j < data.layer.length; j++ ) {
+			var ld = data.layer[j];
 			var newLayer = new wm.EditMap( ld.name, ld.tilesize, ld.tilesetName, !!ld.foreground );
 			newLayer.resize( ld.width, ld.height );
 			newLayer.linkWithCollision = ld.linkWithCollision;
@@ -370,8 +365,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.draw();
 	},
 	
-	
-	
 	// -------------------------------------------------------------------------
 	// Saving
 	
@@ -397,14 +390,13 @@ wm.Weltmeister = ig.Class.extend({
 		data.layer = [];
 		
 		var resources = [];
-		for( var i=0; i < this.layers.length; i++ ) {
+		for( var i = 0; i < this.layers.length; i++ ) {
 			var layer = this.layers[i];
 			data.layer.push( layer.getSaveData() );
 			if( layer.name != 'collision' ) {
 				resources.push( layer.tiles.path );
 			}
 		}
-		
 		
 		var dataString = JSON.stringify(data);
 		if( wm.config.project.prettyPrint ) {
@@ -422,7 +414,6 @@ wm.Weltmeister = ig.Class.extend({
 				return a.toUpperCase();
 			});
 			
-			
 			var resourcesString = '';
 			if( resources.length ) {
 				resourcesString = "Level" + levelName + "Resources=[new ig.Image('" +
@@ -433,8 +424,9 @@ wm.Weltmeister = ig.Class.extend({
 			// Collect all Entity Modules
 			var requires = ['impact.image'];
 			var requiresHash = {};
-			for( var i = 0; i < data.entities.length; i++ ) {
-				var ec = this.entities.entityClasses[ data.entities[i].type ];
+
+			for( var j = 0; j < data.entities.length; j++ ) {
+				var ec = this.entities.entityClasses[ data.entities[j].type ];
 				if( !requiresHash[ec] ) {
 					requiresHash[ec] = true;
 					requires.push(ec);
@@ -496,7 +488,6 @@ wm.Weltmeister = ig.Class.extend({
 		$('#layers').sortable('refresh');
 	},
 	
-	
 	removeLayer: function() {
 		var name = this.activeLayer.name;
 		if( name == 'entities' ) {
@@ -515,7 +506,6 @@ wm.Weltmeister = ig.Class.extend({
 		return false;
 	},
 	
-	
 	getLayerWithName: function( name ) {
 		for( var i = 0; i < this.layers.length; i++ ) {
 			if( this.layers[i].name == name ) {
@@ -525,16 +515,13 @@ wm.Weltmeister = ig.Class.extend({
 		return null;
 	},
 	
-	
 	reorderLayers: function( dir ) {
 		var newLayers = [];
 		var isForegroundLayer = true;
 		$('#layers div.layer span.name').each((function( newIndex, span ){
 			var name = $(span).text();
 			
-			var layer = name == 'entities'
-				? this.entities
-				: this.getLayerWithName(name);
+			var layer = name == 'entities' ? this.entities : this.getLayerWithName(name);
 				
 			if( layer ) {
 				layer.setHotkey( newIndex+1 );
@@ -552,8 +539,7 @@ wm.Weltmeister = ig.Class.extend({
 		this.layers = newLayers;
 		this.setModified();
 		this.draw();
-	},
-	
+	},	
 	
 	updateLayerSettings: function( ) {
 		$('#layerName').val( this.activeLayer.name );
@@ -565,8 +551,7 @@ wm.Weltmeister = ig.Class.extend({
 		$('#layerRepeat').prop( 'checked', this.activeLayer.repeat );
 		$('#layerLinkWithCollision').prop( 'checked', this.activeLayer.linkWithCollision );
 		$('#layerDistance').val( this.activeLayer.distance );
-	},
-	
+	},	
 	
 	saveLayerSettings: function() {
 		var isCollision = $('#layerIsCollision').prop('checked');
@@ -578,6 +563,7 @@ wm.Weltmeister = ig.Class.extend({
 		if( newWidth != this.activeLayer.width || newHeight != this.activeLayer.height ) {
 			this.activeLayer.resize( newWidth, newHeight );
 		}
+
 		this.activeLayer.tilesize = Math.floor($('#layerTilesize').val());
 		
 		if( isCollision ) {
@@ -586,8 +572,7 @@ wm.Weltmeister = ig.Class.extend({
 			this.activeLayer.distance = 1;
 			this.activeLayer.repeat = false;
 			this.activeLayer.setCollisionTileset();
-		}
-		else {
+		} else {
 			var newTilesetName = $('#layerTileset').val();
 			if( newTilesetName != this.activeLayer.tilesetName ) {
 				this.activeLayer.setTileset( newTilesetName );
@@ -598,26 +583,23 @@ wm.Weltmeister = ig.Class.extend({
 			this.activeLayer.preRender = $('#layerPreRender').prop('checked');
 		}
 		
-		
 		if( newName == 'collision' ) {
 			// is collision layer
 			this.collisionLayer = this.activeLayer;
-		} 
-		else if( this.activeLayer.name == 'collision' ) {
+		} else if( this.activeLayer.name == 'collision' ) {
 			// was collision layer, but is no more
 			this.collisionLayer = null;
 		}
-		
 
 		this.activeLayer.setName( newName );
 		this.setModified();
 		this.draw();
 	},
 	
-	
 	setActiveLayer: function( name ) {
 		var previousLayer = this.activeLayer;
 		this.activeLayer = ( name == 'entities' ? this.entities : this.getLayerWithName(name) );
+		
 		if( previousLayer == this.activeLayer ) {
 			return; // nothing to do here
 		}
@@ -625,6 +607,7 @@ wm.Weltmeister = ig.Class.extend({
 		if( previousLayer ) {
 			previousLayer.setActive( false );
 		}
+
 		this.activeLayer.setActive( true );
 		this.mode = this.MODE.DEFAULT;
 		
@@ -632,8 +615,7 @@ wm.Weltmeister = ig.Class.extend({
 		
 		if( name == 'entities' ) {
 			$('#layerSettings').fadeOut(100);
-		}
-		else {
+		} else {
 			this.entities.selectEntity( null );
 			this.toggleCollisionLayer();
 			$('#layerSettings')
@@ -643,19 +625,18 @@ wm.Weltmeister = ig.Class.extend({
 		this.draw();
 	},
 	
-	
 	toggleCollisionLayer: function( ev ) {
 		var isCollision = $('#layerIsCollision').prop('checked');
 		$('#layerLinkWithCollision,#layerDistance,#layerPreRender,#layerRepeat,#layerName,#layerTileset')
 			.attr('disabled', isCollision );
 	},
 	
-	
-	
 	// -------------------------------------------------------------------------
 	// Update
 	
 	mousemove: function() {
+		var x, y;
+
 		if( !this.activeLayer ) {
 			return;
 		}
@@ -665,26 +646,22 @@ wm.Weltmeister = ig.Class.extend({
 			// scroll map
 			if( ig.input.state('drag') ) {
 				this.drag();
-			}
-			
-			else if( ig.input.state('draw') ) {
+			} else if( ig.input.state('draw') ) {
 				
 				// move/scale entity
 				if( this.activeLayer == this.entities ) {
-					var x = ig.input.mouse.x + this.screen.x;
-					var y = ig.input.mouse.y + this.screen.y;
+					x = ig.input.mouse.x + this.screen.x;
+					y = ig.input.mouse.y + this.screen.y;
 					this.entities.dragOnSelectedEntity( x, y );
 					this.setModified();
-				}
 				
 				// draw on map
-				else if( !this.activeLayer.isSelecting ) {
+				} else if( !this.activeLayer.isSelecting ) {
 					this.setTileOnCurrentLayer();
 				}
-			}
-			else if( this.activeLayer == this.entities ) {
-				var x = ig.input.mouse.x + this.screen.x;
-				var y = ig.input.mouse.y + this.screen.y;
+			} else if( this.activeLayer == this.entities ) {
+				x = ig.input.mouse.x + this.screen.x;
+				y = ig.input.mouse.y + this.screen.y;
 				this.entities.mousemove( x, y );
 			}
 		}
@@ -692,7 +669,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.mouseLast = {x: ig.input.mouse.x, y: ig.input.mouse.y};
 		this.draw();
 	},
-	
 	
 	keydown: function( action ) {
 		if( !this.activeLayer ) {
@@ -709,12 +685,10 @@ wm.Weltmeister = ig.Class.extend({
 					if( entity ) {
 						this.undo.beginEntityEdit( entity );
 					}
-				}
-				else {
+				} else {
 					if( ig.input.state('select') ) {
 						this.activeLayer.beginSelecting( ig.input.mouse.x, ig.input.mouse.y );
-					}
-					else {
+					} else {
 						this.undo.beginMapDraw();
 						this.activeLayer.beginEditing();
 						if( 
@@ -727,15 +701,13 @@ wm.Weltmeister = ig.Class.extend({
 						this.setTileOnCurrentLayer();
 					}
 				}
-			}
-			else if( this.mode == this.MODE.TILESELECT && ig.input.state('select') ) {	
+			} else if( this.mode == this.MODE.TILESELECT && ig.input.state('select') ) {	
 				this.activeLayer.tileSelect.beginSelecting( ig.input.mouse.x, ig.input.mouse.y );
 			}
 		}
 		
 		this.draw();
 	},
-	
 	
 	keyup: function( action ) {
 		if( !this.activeLayer ) {
@@ -745,24 +717,21 @@ wm.Weltmeister = ig.Class.extend({
 		if( action == 'delete' ) {
 			this.entities.deleteSelectedEntity();
 			this.setModified();
-		}
-		
-		else if( action == 'clone' ) {
+
+		} else if( action == 'clone' ) {
 			this.entities.cloneSelectedEntity();
 			this.setModified();
-		}
-		
-		else if( action == 'grid' ) {
+
+		} else if( action == 'grid' ) {
 			wm.config.view.grid = !wm.config.view.grid;
-		}
-		
-		else if( action == 'menu' ) {
+
+		} else if( action == 'menu' ) {
 			if( this.mode != this.MODE.TILESELECT && this.mode != this.MODE.ENTITYSELECT ) {
 				if( this.activeLayer == this.entities ) {
 					this.mode = this.MODE.ENTITYSELECT;
 					this.entities.showMenu( ig.input.mouse.x, ig.input.mouse.y );
-				}
-				else {
+
+				} else {
 					this.mode = this.MODE.TILESELECT;
 					this.activeLayer.tileSelect.setPosition( ig.input.mouse.x, ig.input.mouse.y	);
 				}
@@ -770,30 +739,26 @@ wm.Weltmeister = ig.Class.extend({
 				this.mode = this.MODE.DEFAULT;
 				this.entities.hideMenu();
 			}
-		}
-		
-		else if( action == 'zoomin' ) {
+		} else if( action == 'zoomin' ) {
 			this.zoom( 1 );
-		}
-		else if( action == 'zoomout' ) {
+
+		} else if( action == 'zoomout' ) {
 			this.zoom( -1 );
 		}
-		
-		
+				
 		if( action == 'draw' ) {			
 			// select tile
 			if( this.mode == this.MODE.TILESELECT ) {
 				this.activeLayer.brush = this.activeLayer.tileSelect.endSelecting( ig.input.mouse.x, ig.input.mouse.y );
 				this.mode = this.MODE.DEFAULT;
-			}
-			else if( this.activeLayer == this.entities ) {
+				
+			} else if( this.activeLayer == this.entities ) {
 				this.undo.endEntityEdit();
-			}
-			else {
+
+			} else {
 				if( this.activeLayer.isSelecting ) {
 					this.activeLayer.brush = this.activeLayer.endSelecting( ig.input.mouse.x, ig.input.mouse.y );
-				}
-				else {
+				} else {
 					this.undo.endMapDraw();
 				}
 			}
@@ -810,7 +775,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.draw();
 		this.mouseLast = {x: ig.input.mouse.x, y: ig.input.mouse.y};
 	},
-	
 	
 	setTileOnCurrentLayer: function() {
 		if( !this.activeLayer || !this.activeLayer.scroll ) {
@@ -835,7 +799,6 @@ wm.Weltmeister = ig.Class.extend({
 				this.activeLayer.setTile( mapx, mapy, newTile );
 				this.undo.pushMapDraw( this.activeLayer, mapx, mapy, oldTile, newTile );
 				
-				
 				if( 
 					this.activeLayer.linkWithCollision && 
 					this.collisionLayer && 
@@ -853,7 +816,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.setModified();
 	},
 	
-	
 	// -------------------------------------------------------------------------
 	// Drawing
 	
@@ -863,12 +825,10 @@ wm.Weltmeister = ig.Class.extend({
 		this.needsDraw = true;
 	},
 	
-	
 	drawIfNeeded: function() {
 		// Only draw if flag is set
 		if( !this.needsDraw ) { return; }
 		this.needsDraw = false;
-		
 		
 		ig.system.clear( wm.config.colors.clear );
 	
@@ -888,7 +848,6 @@ wm.Weltmeister = ig.Class.extend({
 			this.entities.draw();
 		}
 		
-		
 		if( this.activeLayer ) {
 			if( this.mode == this.MODE.TILESELECT ) {
 				this.activeLayer.tileSelect.draw();
@@ -904,7 +863,6 @@ wm.Weltmeister = ig.Class.extend({
 			this.drawLabels( wm.config.labels.step );
 		}
 	},
-	
 	
 	drawLabels: function( step ) {
 		ig.system.context.fillStyle = wm.config.colors.primary;
@@ -957,8 +915,7 @@ ig.Image.inject({
 		if( scale > 1 ) {
 			// Nearest neighbor when zooming in
 			this.parent( scale );
-		}
-		else {
+		} else {
 			// Otherwise blur
 			var scaled = ig.$new('canvas');
 			scaled.width = Math.ceil(this.width * scale);
@@ -971,8 +928,6 @@ ig.Image.inject({
 		this.scaleCache['x'+scale] = this.data;
 	}
 });
-
-
 
 // Create a custom loader, to skip sound files and the run loop creation
 wm.Loader = ig.Loader.extend({
@@ -988,8 +943,7 @@ wm.Loader = ig.Loader.extend({
 	loadResource: function( res ) {
 		if( res instanceof ig.Sound ) {
 			this._unloaded.erase( res.path );
-		}
-		else {
+		} else {
 			this.parent( res );
 		}
 	}
