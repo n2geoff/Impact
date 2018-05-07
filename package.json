@@ -1,0 +1,25 @@
+{
+  "name": "impactjs",
+  "version": "1.0.0",
+  "description": "impactjs using node as server",
+  "main": "game/server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "glob": "^7.1.2",
+    "method-override": "^2.3.10",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  },
+  "scripts": {
+    "start": "nodemon ./game/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

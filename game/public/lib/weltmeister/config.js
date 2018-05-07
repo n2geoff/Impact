@@ -1,7 +1,7 @@
 ig.module(
 	'weltmeister.config'
 )
-.defines(function(){ "use strict";
+.defines(function() { "use strict";
 
 wm.config = {
 	
@@ -118,9 +118,9 @@ wm.config = {
 	// different backend (i.e. not the official PHP backend), you may have
 	// to change these.
 	'api': {
-		'save': 'lib/weltmeister/api/save.php',
-		'browse': 'lib/weltmeister/api/browse.php',
-		'glob': 'lib/weltmeister/api/glob.php'
+		'save': '/wm/save',
+		'browse': '/wm/browse',
+		'glob': '/wm/glob'
 	}
 };
 
