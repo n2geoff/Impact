@@ -8,7 +8,8 @@
 
 Impact is a JavaScript Game Engine that allows you to develop stunning HTML5 Games for desktop and mobile browsers.
 
-- More info & documentation: http://impactjs.com/
+- More info at: http://impactjs.com/
+- Documents at: http://impactjs.com/documentation
 - Various example games to get you started are available on http://impactjs.com/download
 
 **Features**
