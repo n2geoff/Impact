@@ -29,13 +29,21 @@ This will get everything up-and-running via [NodeJS](https://nodejs.org/en/)
 4. run `npm install`
 5. run `npm start`
 
-Your `game` files are stored in the `game` folder, you can point your text editor here.
+Your game files are stored in the `/game/lib/game/` folder, you can point your text editor here. *I know that is crazy*
 
 To see your game running, navigate your browser here: `http://localhost:8080`
 
 To see the game editor, navigate your browser to: `http://localhost:8080/weltmeister.html`
 
 For everything else, check out [impact.js.com]( http://impactjs.com/)
+
+## TODO
+
+- Lots of cleanup
+    - move directories around
+    - cleanup express
+- gulp build process for minification/bake
+- Check if I can bring Docs here?
 
 ## Support
 
