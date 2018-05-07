@@ -13,6 +13,7 @@ app.set("views", __dirname + "/views");
 // middleware
 app.use(methodOverride());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 // routes
 app.get("/", function(req, res){
