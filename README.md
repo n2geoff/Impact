@@ -29,7 +29,7 @@ This will get everything up-and-running via [NodeJS](https://nodejs.org/en/)
 4. run `npm install`
 5. run `npm start`
 
-Your game files are stored in the `/game/lib/game/` folder, you can point your text editor here. *I know that is crazy*
+Your game files are stored in the `/src/public/lib/game/` folder, you can point your text editor here.
 
 To see your game running, navigate your browser here: `http://localhost:8080`
 

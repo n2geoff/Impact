@@ -2,7 +2,7 @@
 var express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-    impact = require("../game/public/lib/weltmeister/api/weltmeister");
+    impact = require("./public/lib/weltmeister/api/weltmeister");
     port = 8080;
 
 // create app
