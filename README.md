@@ -1,6 +1,6 @@
 ## NOTICE
 
-[Dominic Szablewski's](http://phoboslab.org/) [ImpactJS Game Engine]() was released under [MIT](LICENSE) license recently, and I felt the biggest disadvantage its PHP usage for its level editor, Weltmeister.  Searching GitHub reveiled some old work by [cpetzold](https://github.com/cpetzold/node-impact).  I updated that work and now I think it is much easier to GET STARTED
+[Dominic Szablewski's](http://phoboslab.org/) [ImpactJS Game Engine]() was released under [MIT](LICENSE) license recently, and I felt the biggest disadvantage its PHP usage for its level editor, Weltmeister.  Searching GitHub revealed some old work by [cpetzold](https://github.com/cpetzold/node-impact).  I updated that work and now I think it is much easier to GET STARTED
 
 # ImpactJS
 
@@ -19,7 +19,7 @@ Impact is a JavaScript Game Engine that allows you to develop stunning HTML5 Gam
 - Powerful Debug Tools
 - Get Started in Minutes
 
-## Quick Start
+## Get Started
 
 This will get everything up-and-running via [NodeJS](https://nodejs.org/en/)
 
