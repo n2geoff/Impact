@@ -59,8 +59,6 @@ wm.Weltmeister = ig.Class.extend({
 		ig.system.context.font = wm.config.labels.font;
 		this.labelsStep = wm.config.labels.step;
 		
-			
-		
 		// Dialogs
 		this.loadDialog = new wm.ModalDialogPathSelect( 'Load Level', 'Load', 'scripts' );
 		this.loadDialog.onOk = this.load.bind(this);
@@ -290,10 +288,12 @@ wm.Weltmeister = ig.Class.extend({
 	
 	loadNew: function() {
 		$.cookie( 'wmLastLevel', null );
+
 		while( this.layers.length ) {
 			this.layers[0].destroy();
 			this.layers.splice( 0, 1 );
 		}
+
 		this.screen = {x: 0, y: 0};
 		this.entities.clear();
 		this.fileName = 'untitled.js';
@@ -376,6 +376,7 @@ wm.Weltmeister = ig.Class.extend({
 	// Saving
 	
 	saveQuick: function() {
+
 		if( this.fileName == 'untitled.js' ) {
 			this.saveDialog.open();
 		}
