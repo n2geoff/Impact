@@ -2,7 +2,7 @@
 var express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-    impact = require("./public/lib/weltmeister/api/weltmeister");
+    editor = require("./public/lib/weltmeister/api/weltmeister");
     port = 8080;
 
 // create app
@@ -20,15 +20,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 // app routes
 app.get("/", function(req, res){
     res.render("index.pug", {
-        locals: { title: "Example node-impact server" }
+        locals: { title: "Weltmeister Level Editor" }
     });
 });
 
-// impact server start
-var im = impact.listen(app, { root: __dirname + "/public" });
+// editor api server start
+var weltmeister = editor.listen(app, { root: __dirname + "/public" });
 
-// impact middleware
-app.use(express.static(im.root));
+// editor middleware
+app.use(express.static(weltmeister.root));
 
 // add server start
 app.listen(port, function() {
