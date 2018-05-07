@@ -1,6 +1,6 @@
 ## NOTICE
 
-[Dominic Szablewski's](http://phoboslab.org/) [ImpactJS Game Engine]() was released under [MIT](LICENSE) license recently, and I felt the biggest disadvantage its PHP usage for its level editor, Weltmeister.  Searching GitHub revealed some old work by [cpetzold](https://github.com/cpetzold/node-impact).  I updated that work and now I think it is much easier to GET STARTED
+[Dominic Szablewski's](http://phoboslab.org/) [ImpactJS Game Engine](http://impactjs.com/) was released under [MIT](LICENSE) license recently, and I felt its biggest disadvantage was its PHP usage for the level editor, Weltmeister.  Searching GitHub revealed some old work by [cpetzold](https://github.com/cpetzold/node-impact). Starting there, I was able to develop a better GETTING STARTED flow, I think...
 
 # ImpactJS
 
@@ -20,7 +20,7 @@ Impact is a JavaScript Game Engine that allows you to develop stunning HTML5 Gam
 - Powerful Debug Tools
 - Get Started in Minutes
 
-## Get Started
+## Getting Started
 
 This will get everything up-and-running via [NodeJS](https://nodejs.org/en/)
 
@@ -41,14 +41,14 @@ For everything else, check out [impact.js.com]( http://impactjs.com/)
 ## TODO
 
 - Lots of cleanup
-    - move directories around
-    - cleanup express
-- gulp build process for minification/bake
-- Check if I can bring Docs here?
+- gulp build process for minify/bake
+- check we can include Docs here?
+
+> NOTE: php (tools) is currently required to build your game for distribution
 
 ## Support
 
-You can open [an issue](https://github.com/n2geoff/impact/issues/new) for support, however my goal is just to run under node.  For engine features please use the original github repository issues [found here](https://github.com/phoboslab/Impact/issues) 
+You can open [an issue](https://github.com/n2geoff/impact/issues/new) for support, however my goal is just to run ImpactJS under node.  For ImpactJS engine features please use the original github repository issues [found here](https://github.com/phoboslab/Impact/issues), thanks!
 
 ## Contributing
 
