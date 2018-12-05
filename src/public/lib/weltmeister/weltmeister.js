@@ -129,7 +129,6 @@ wm.Weltmeister = ig.Class.extend({
 		
 		this.undo = new wm.Undo( wm.config.undoLevels );
 		
-		
 		if( wm.config.loadLastLevel ) {
 			var path = $.cookie('wmLastLevel');
 			if( path ) {
